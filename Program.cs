@@ -1,13 +1,35 @@
 ﻿using System;
 using System.Security.Cryptography;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Configs;
+using BenchmarkDotNet.Environments;
+using BenchmarkDotNet.Horology;
+using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 
 namespace TestBenchmark
 {
+
+    public class Config : ManualConfig
+    {
+        public Config()
+        {
+            Add(
+                Job.Dry
+                .With(Platform.X64)
+                .With(Jit.RyuJit)
+                .With(Runtime.Core)
+                .WithMinIterationTime(TimeInterval.FromMicroseconds(100))
+                .WithLaunchCount(1));
+        }
+    }
+
+    [Config(typeof(Config))]
+    [MemoryDiagnoser]
     public class Md5VsSha256
     {
-        private const int N = 10000;
+        [Params(10, 100, 1000)]
+        public int N { get; set; }
         private readonly byte[] data;
 
         private readonly SHA256 sha256 = SHA256.Create();
@@ -19,10 +41,22 @@ namespace TestBenchmark
         }
 
         [Benchmark]
-        public byte[] Sha256() => sha256.ComputeHash(data);
+        public void Sha256()
+        {
+            for(var i = 0; i < N; i++)
+            {
+                sha256.ComputeHash(data);
+            }
+        }
 
         [Benchmark]
-        public byte[] Md5() => md5.ComputeHash(data);
+        public void Md5()
+        {
+            for(var i = 0; i < N; i++)
+            {
+                md5.ComputeHash(data);
+            }
+        }
     }
 
     class Program

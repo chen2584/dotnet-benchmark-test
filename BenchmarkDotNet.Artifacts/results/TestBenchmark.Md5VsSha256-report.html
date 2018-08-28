@@ -16,16 +16,24 @@
 BenchmarkDotNet=v0.11.1, OS=macOS High Sierra 10.13.5 (17F77) [Darwin 17.6.0]
 Intel Core i5-4308U CPU 2.80GHz (Haswell), 1 CPU, 4 logical and 2 physical cores
 .NET Core SDK=2.1.400
-  [Host]     : .NET Core 2.1.2 (CoreCLR 4.6.26628.05, CoreFX 4.6.26629.01), 64bit RyuJIT
-  DefaultJob : .NET Core 2.1.2 (CoreCLR 4.6.26628.05, CoreFX 4.6.26629.01), 64bit RyuJIT
+  [Host] : .NET Core 2.1.2 (CoreCLR 4.6.26628.05, CoreFX 4.6.26629.01), 64bit RyuJIT
+  Dry    : .NET Core 2.1.2 (CoreCLR 4.6.26628.05, CoreFX 4.6.26629.01), 64bit RyuJIT
 </code></pre>
-<pre><code></code></pre>
+<pre><code>Job=Dry  MinIterationTime=100.0000 us  Jit=RyuJit  
+Platform=X64  Runtime=Core  IterationCount=1  
+LaunchCount=1  RunStrategy=ColdStart  UnrollFactor=1  
+WarmupCount=1  
+</code></pre>
 
 <table>
-<thead><tr><th>Method</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Median</th>
+<thead><tr><th>Method</th><th>N</th><th>Mean</th><th>Error</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>Sha256</td><td>46.96 us</td><td>3.6894 us</td><td>10.586 us</td><td>42.45 us</td>
-</tr><tr><td>Md5</td><td>29.24 us</td><td>0.7312 us</td><td>2.014 us</td><td>28.80 us</td>
+</thead><tbody><tr><td>Sha256</td><td>10</td><td>2.245 ms</td><td>NA</td><td>1120 B</td>
+</tr><tr><td>Md5</td><td>10</td><td>2.937 ms</td><td>NA</td><td>800 B</td>
+</tr><tr><td>Sha256</td><td>100</td><td>1.912 ms</td><td>NA</td><td>11200 B</td>
+</tr><tr><td>Md5</td><td>100</td><td>2.230 ms</td><td>NA</td><td>8000 B</td>
+</tr><tr><td>Sha256</td><td>1000</td><td>2.334 ms</td><td>NA</td><td>112000 B</td>
+</tr><tr><td>Md5</td><td>1000</td><td>2.600 ms</td><td>NA</td><td>80000 B</td>
 </tr></tbody></table>
 </body>
 </html>
